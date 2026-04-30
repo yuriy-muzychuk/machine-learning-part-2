@@ -1,5 +1,5 @@
 """
-generate_dataset.py — Synthetic Anomaly Detection Dataset
+generate_dataset.py - Synthetic Anomaly Detection Dataset
 ==========================================================
 Run this script once before starting Lab 10 Part 6.
 Produces  anomaly_dataset.csv  in the current working directory.
@@ -12,11 +12,11 @@ Normal data  (label = 0)
   Cluster C : small Gaussian  at (-4,  5),  n =   300
 
 Anomalies  (label = 1)
-  Type 1 — distant scatter   : uniform in [-10, 10]^2,
+  Type 1 - distant scatter   : uniform in [-10, 10]^2,
             Mahalanobis distance > 4 from every normal centre,  n ≈ 250
-  Type 2 — compact cluster   : tight Gaussian at (8, -3),
+  Type 2 - compact cluster   : tight Gaussian at (8, -3),
             well separated from all normal clusters,            n = 150
-  Type 3 — near-boundary ring: ring around Cluster A at
+  Type 3 - near-boundary ring: ring around Cluster A at
             Mahalanobis radius 2.8–3.8,                         n ≈ 100
 
 Total ≈ 5 000 rows.  Columns: x1, x2, label.
@@ -70,19 +70,19 @@ centre_list = [
     ([-4.0, 5.0], np.linalg.inv(cov_C)),
 ]
 
-# ── Anomaly type 1 — distant uniform scatter ──────────────────────────────────
+# ── Anomaly type 1 - distant uniform scatter ──────────────────────────────────
 
 candidates = rng.uniform(-10, 10, size=(5000, 2))
 maha_cands = min_mahal(candidates, centre_list)
 X_type1    = candidates[maha_cands > 4.0][:250]
 
-# ── Anomaly type 2 — compact cluster at (8, -3) ───────────────────────────────
+# ── Anomaly type 2 - compact cluster at (8, -3) ───────────────────────────────
 
 X_type2 = rng.multivariate_normal(
     [8.0, -3.0], [[0.3, 0.0], [0.0, 0.3]], size=150
 )
 
-# ── Anomaly type 3 — near-boundary ring around Cluster A ─────────────────────
+# ── Anomaly type 3 - near-boundary ring around Cluster A ─────────────────────
 
 angles = rng.uniform(0.0, 2.0 * np.pi, size=500)
 radii  = rng.uniform(2.8, 3.8, size=500)

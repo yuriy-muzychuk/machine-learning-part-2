@@ -1,8 +1,8 @@
 """
-dim_viz_student.py — t-SNE from Scratch (Student Version)
+dim_viz_student.py - t-SNE from Scratch (Student Version)
 ==========================================================
 Week 8 Lab: Implement t-SNE for 2-D visualisation of high-dimensional data.
-PCA (from week 7) and UMAP (via umap-learn) are used for comparison — no
+PCA (from week 7) and UMAP (via umap-learn) are used for comparison - no
 implementation is required for those two.
 
 Instructions
@@ -25,7 +25,7 @@ import numpy as np
 
 
 # =============================================================================
-# Section 1 — Pairwise squared Euclidean distances
+# Section 1 - Pairwise squared Euclidean distances
 # =============================================================================
 
 def pairwise_sq_distances(X):
@@ -67,7 +67,7 @@ def pairwise_sq_distances(X):
 
 
 # =============================================================================
-# Section 2 — High-dimensional affinities (Gaussian kernel / perplexity)
+# Section 2 - High-dimensional affinities (Gaussian kernel / perplexity)
 # =============================================================================
 
 def gaussian_affinities(d_sq_row, sigma):
@@ -79,13 +79,13 @@ def gaussian_affinities(d_sq_row, sigma):
 
     Parameters
     ----------
-    d_sq_row : ndarray (n,)  — row i of the squared-distance matrix;
+    d_sq_row : ndarray (n,)  - row i of the squared-distance matrix;
                                d_sq_row[i] == 0 marks the anchor point
-    sigma    : float         — bandwidth for this anchor
+    sigma    : float         - bandwidth for this anchor
 
     Returns
     -------
-    p_row : ndarray (n,)     — conditional probabilities; p_row[i] == 0
+    p_row : ndarray (n,)     - conditional probabilities; p_row[i] == 0
 
     Steps
     -----
@@ -114,7 +114,7 @@ def gaussian_affinities(d_sq_row, sigma):
 def _perplexity_of(p_row):
     """Shannon perplexity: 2^H  where H = -sum_j p_j log2(p_j).
 
-    Helper used inside find_sigma — already implemented, do not change.
+    Helper used inside find_sigma - already implemented, do not change.
     """
     p = p_row[p_row > 0.0]
     H = -np.sum(p * np.log2(p))
@@ -129,9 +129,9 @@ def find_sigma(d_sq_row, perplexity, tol=1e-5, max_iter=200):
 
     Parameters
     ----------
-    d_sq_row   : ndarray (n,)   — row of the squared-distance matrix
-    perplexity : float          — target perplexity (typical range: 5-50)
-    tol        : float          — stop when |achieved - target| < tol
+    d_sq_row   : ndarray (n,)   - row of the squared-distance matrix
+    perplexity : float          - target perplexity (typical range: 5-50)
+    tol        : float          - stop when |achieved - target| < tol
     max_iter   : int
 
     Returns
@@ -198,7 +198,7 @@ def compute_P(X, perplexity=30.0):
     3.  Allocate a (n, n) matrix for conditional probabilities:
             P_cond = np.zeros((n, n))
 
-    4.  Fill row by row (this loop is the slow O(n^2) step — ~15-30 s for n=300):
+    4.  Fill row by row (this loop is the slow O(n^2) step - ~15-30 s for n=300):
             for i in range(n):
                 sigma_i    = find_sigma(D[i], perplexity)
                 P_cond[i]  = gaussian_affinities(D[i], sigma_i)
@@ -218,7 +218,7 @@ def compute_P(X, perplexity=30.0):
 
 
 # =============================================================================
-# Section 3 — Low-dimensional affinities (Student-t / Cauchy kernel)
+# Section 3 - Low-dimensional affinities (Student-t / Cauchy kernel)
 # =============================================================================
 
 def compute_Q(Y):
@@ -264,7 +264,7 @@ def compute_Q(Y):
 
 
 # =============================================================================
-# Section 4 — Gradient of the KL divergence
+# Section 4 - Gradient of the KL divergence
 # =============================================================================
 
 def tsne_gradient(P, Q, Y):
@@ -277,8 +277,8 @@ def tsne_gradient(P, Q, Y):
 
     Parameters
     ----------
-    P : ndarray (n, n)  — high-dim joint probabilities (from compute_P)
-    Q : ndarray (n, n)  — low-dim  joint probabilities (from compute_Q)
+    P : ndarray (n, n)  - high-dim joint probabilities (from compute_P)
+    Q : ndarray (n, n)  - low-dim  joint probabilities (from compute_Q)
     Y : ndarray (n, n_components)
 
     Returns
@@ -297,15 +297,15 @@ def tsne_gradient(P, Q, Y):
     3.  Build the combined scalar multiplier matrix:
             PQ_diff = (P - Q) * W         # shape (n, n), element-wise product
 
-    4.  Compute the gradient. Two equivalent options — pick one:
+    4.  Compute the gradient. Two equivalent options - pick one:
 
-        Option A (vectorised with einsum — fast):
+        Option A (vectorised with einsum - fast):
             # Y[:, None, :] - Y[None, :, :] gives pairwise differences
             # shape (n, n, n_components)
             Y_diff = Y[:, None, :] - Y[None, :, :]
             grad   = 4.0 * np.einsum("ij,ijk->ik", PQ_diff, Y_diff)
 
-        Option B (explicit loop — easier to read):
+        Option B (explicit loop - easier to read):
             grad = np.zeros_like(Y)
             for i in range(n):
                 # diff[j] = y_i - y_j, shape (n, n_components)
@@ -320,7 +320,7 @@ def tsne_gradient(P, Q, Y):
 
 
 # =============================================================================
-# Section 5 — TSNE class
+# Section 5 - TSNE class
 # =============================================================================
 
 class TSNE:
@@ -336,11 +336,11 @@ class TSNE:
 
     Parameters
     ----------
-    n_components  : int    — embedding dimension (almost always 2)
-    perplexity    : float  — effective neighbourhood size; typical range 5-50
-    n_iter        : int    — number of gradient-descent steps
-    learning_rate : float  — step size (eta)
-    momentum      : float  — momentum coefficient (mu); 0 disables momentum
+    n_components  : int    - embedding dimension (almost always 2)
+    perplexity    : float  - effective neighbourhood size; typical range 5-50
+    n_iter        : int    - number of gradient-descent steps
+    learning_rate : float  - step size (eta)
+    momentum      : float  - momentum coefficient (mu); 0 disables momentum
     random_state  : int
     """
 
@@ -370,12 +370,12 @@ class TSNE:
 
         Parameters
         ----------
-        X : ndarray (n, d) — high-dimensional input; should be pre-scaled
+        X : ndarray (n, d) - high-dimensional input; should be pre-scaled
                              (e.g. via StandardScaler)
 
         Returns
         -------
-        Y : ndarray (n, n_components) — the 2-D embedding
+        Y : ndarray (n, n_components) - the 2-D embedding
 
         Steps
         -----
@@ -383,7 +383,7 @@ class TSNE:
                 rng = np.random.RandomState(self.random_state)
                 n   = X.shape[0]
 
-        2.  Compute high-dim affinities — the expensive step, done once:
+        2.  Compute high-dim affinities - the expensive step, done once:
                 P = compute_P(X, self.perplexity)
 
         3.  Initialise the embedding with small random values (keeping points
@@ -396,7 +396,7 @@ class TSNE:
         5.  Reset the loss log:
                 self.kl_curve_ = []
 
-        6.  Gradient-descent loop — for t in range(self.n_iter):
+        6.  Gradient-descent loop - for t in range(self.n_iter):
 
               a. Compute low-dim affinities for current Y:
                      Q = compute_Q(Y)

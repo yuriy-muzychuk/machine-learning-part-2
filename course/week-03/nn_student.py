@@ -1,5 +1,5 @@
 """
-nn_student.py — Two-Layer Neural Network (Student Version)
+nn_student.py - Two-Layer Neural Network (Student Version)
 ===========================================================
 Week 3 Lab: Implement a two-layer neural network from scratch using NumPy.
 
@@ -29,7 +29,7 @@ import numpy as np
 
 
 # ─────────────────────────────────────────────────────────────
-# Section 1 — Activation Functions
+# Section 1 - Activation Functions
 # ─────────────────────────────────────────────────────────────
 
 def sigmoid(z):
@@ -44,7 +44,7 @@ def sigmoid(z):
     np.ndarray, same shape as z, values in (0, 1)
 
     Hint: use np.exp. Be careful about numerical overflow for large
-    negative values — np.exp(-z) can explode. np.clip(z, -500, 500)
+    negative values - np.exp(-z) can explode. np.clip(z, -500, 500)
     before exponentiating is a safe guard.
     """
     raise NotImplementedError("TODO: implement sigmoid")
@@ -83,7 +83,7 @@ def tanh_derivative(z):
 
 
 # ─────────────────────────────────────────────────────────────
-# Section 2 — Weight Initialisation
+# Section 2 - Weight Initialisation
 # ─────────────────────────────────────────────────────────────
 
 def initialise_weights(n_input, n_hidden, n_output, seed=42):
@@ -96,10 +96,10 @@ def initialise_weights(n_input, n_hidden, n_output, seed=42):
 
     Parameters
     ----------
-    n_input  : int — number of input features
-    n_hidden : int — number of hidden neurons
-    n_output : int — number of output neurons (1 for binary classification)
-    seed     : int — random seed for reproducibility
+    n_input  : int - number of input features
+    n_hidden : int - number of hidden neurons
+    n_output : int - number of output neurons (1 for binary classification)
+    seed     : int - random seed for reproducibility
 
     Returns
     -------
@@ -116,7 +116,7 @@ def initialise_weights(n_input, n_hidden, n_output, seed=42):
 
 
 # ─────────────────────────────────────────────────────────────
-# Section 3 — Forward Pass
+# Section 3 - Forward Pass
 # ─────────────────────────────────────────────────────────────
 
 def forward_pass(X, params):
@@ -130,14 +130,14 @@ def forward_pass(X, params):
 
     Parameters
     ----------
-    X      : np.ndarray shape (N, n_input)  — input batch
+    X      : np.ndarray shape (N, n_input)  - input batch
     params : dict with keys 'W1', 'b1', 'W2', 'b2'
 
     Returns
     -------
-    A2    : np.ndarray shape (N, n_output) — output probabilities
+    A2    : np.ndarray shape (N, n_output) - output probabilities
     cache : dict with keys 'X', 'Z1', 'A1', 'Z2', 'A2'
-            (store ALL intermediate values — needed for backprop)
+            (store ALL intermediate values - needed for backprop)
 
     Hint: unpack params['W1'], params['b1'], etc. with
           W1, b1, W2, b2 = params['W1'], ...
@@ -146,7 +146,7 @@ def forward_pass(X, params):
 
 
 # ─────────────────────────────────────────────────────────────
-# Section 4 — Loss
+# Section 4 - Loss
 # ─────────────────────────────────────────────────────────────
 
 def binary_cross_entropy(A2, y):
@@ -156,12 +156,12 @@ def binary_cross_entropy(A2, y):
 
     Parameters
     ----------
-    A2 : np.ndarray shape (N, 1) — predicted probabilities
-    y  : np.ndarray shape (N,) or (N, 1) — true binary labels
+    A2 : np.ndarray shape (N, 1) - predicted probabilities
+    y  : np.ndarray shape (N,) or (N, 1) - true binary labels
 
     Returns
     -------
-    float — scalar loss value
+    float - scalar loss value
 
     Hint: reshape y to (N, 1) with y.reshape(-1, 1) before computing.
     Clip A2 to [1e-12, 1-1e-12] to avoid log(0).
@@ -171,7 +171,7 @@ def binary_cross_entropy(A2, y):
 
 
 # ─────────────────────────────────────────────────────────────
-# Section 5 — Backward Pass
+# Section 5 - Backward Pass
 # ─────────────────────────────────────────────────────────────
 
 def backward_pass(params, cache, y):
@@ -179,7 +179,7 @@ def backward_pass(params, cache, y):
 
     Step-by-step (N = batch size):
 
-    1. Output layer error (combined sigmoid + BCE gradient — elegant result):
+    1. Output layer error (combined sigmoid + BCE gradient - elegant result):
            dZ2 = A2 - y_col          shape (N, n_output)
 
     2. Output layer parameter gradients:
@@ -196,9 +196,9 @@ def backward_pass(params, cache, y):
 
     Parameters
     ----------
-    params : dict — current parameters ('W1', 'b1', 'W2', 'b2')
-    cache  : dict — saved from forward_pass ('X', 'Z1', 'A1', 'Z2', 'A2')
-    y      : np.ndarray shape (N,) — true binary labels
+    params : dict - current parameters ('W1', 'b1', 'W2', 'b2')
+    cache  : dict - saved from forward_pass ('X', 'Z1', 'A1', 'Z2', 'A2')
+    y      : np.ndarray shape (N,) - true binary labels
 
     Returns
     -------
@@ -213,7 +213,7 @@ def backward_pass(params, cache, y):
 
 
 # ─────────────────────────────────────────────────────────────
-# Section 6 — Parameter Update
+# Section 6 - Parameter Update
 # ─────────────────────────────────────────────────────────────
 
 def update_params(params, grads, lr):
@@ -224,13 +224,13 @@ def update_params(params, grads, lr):
 
     Parameters
     ----------
-    params : dict — current parameters (modified IN PLACE)
-    grads  : dict — gradients from backward_pass
-    lr     : float — learning rate
+    params : dict - current parameters (modified IN PLACE)
+    grads  : dict - gradients from backward_pass
+    lr     : float - learning rate
 
     Returns
     -------
-    params : dict — updated parameters (same dict, modified in place)
+    params : dict - updated parameters (same dict, modified in place)
 
     Hint: iterate over ('W1', 'b1', 'W2', 'b2') and subtract lr * grads['d'+key].
     """
@@ -238,26 +238,26 @@ def update_params(params, grads, lr):
 
 
 # ─────────────────────────────────────────────────────────────
-# Section 7 — Training Loop (provided — do not modify)
+# Section 7 - Training Loop (provided - do not modify)
 # ─────────────────────────────────────────────────────────────
 
 def train(X, y, n_hidden=8, lr=0.1, n_epochs=1000, seed=42, verbose=True):
-    """Full training loop — uses the functions you implemented above.
+    """Full training loop - uses the functions you implemented above.
 
     Parameters
     ----------
     X        : np.ndarray shape (N, n_input)
     y        : np.ndarray shape (N,)
-    n_hidden : int   — number of hidden neurons
-    lr       : float — learning rate
-    n_epochs : int   — number of gradient descent steps
-    seed     : int   — random seed
-    verbose  : bool  — print loss every 200 epochs
+    n_hidden : int   - number of hidden neurons
+    lr       : float - learning rate
+    n_epochs : int   - number of gradient descent steps
+    seed     : int   - random seed
+    verbose  : bool  - print loss every 200 epochs
 
     Returns
     -------
-    params     : dict — trained parameters
-    loss_curve : list of float — loss at each epoch
+    params     : dict - trained parameters
+    loss_curve : list of float - loss at each epoch
     """
     params = initialise_weights(X.shape[1], n_hidden, 1, seed=seed)
     loss_curve = []
@@ -276,7 +276,7 @@ def train(X, y, n_hidden=8, lr=0.1, n_epochs=1000, seed=42, verbose=True):
 
 
 # ─────────────────────────────────────────────────────────────
-# Section 8 — Prediction (provided — do not modify)
+# Section 8 - Prediction (provided - do not modify)
 # ─────────────────────────────────────────────────────────────
 
 def predict(X, params, threshold=0.5):
@@ -285,12 +285,12 @@ def predict(X, params, threshold=0.5):
     Parameters
     ----------
     X         : np.ndarray shape (N, n_input)
-    params    : dict — trained parameters
-    threshold : float — decision threshold (default 0.5)
+    params    : dict - trained parameters
+    threshold : float - decision threshold (default 0.5)
 
     Returns
     -------
-    np.ndarray shape (N,) — predicted labels (0 or 1)
+    np.ndarray shape (N,) - predicted labels (0 or 1)
     """
     probs, _ = forward_pass(X, params)
     return (probs.ravel() >= threshold).astype(int)
@@ -302,11 +302,11 @@ def predict_proba(X, params):
     Parameters
     ----------
     X      : np.ndarray shape (N, n_input)
-    params : dict — trained parameters
+    params : dict - trained parameters
 
     Returns
     -------
-    np.ndarray shape (N,) — probabilities in (0, 1)
+    np.ndarray shape (N,) - probabilities in (0, 1)
     """
     probs, _ = forward_pass(X, params)
     return probs.ravel()

@@ -1,5 +1,5 @@
 """
-pca_svd_student.py — PCA and Truncated SVD from Scratch (Student Version)
+pca_svd_student.py - PCA and Truncated SVD from Scratch (Student Version)
 =========================================================================
 Week 7 Lab: Implement Principal Component Analysis and Truncated SVD
 using only NumPy. Apply both methods to synthetic data, a face image
@@ -12,7 +12,7 @@ Implement every method marked with
 
 Do NOT import anything beyond what is already imported.
 Do NOT change method signatures or the __init__ constructors.
-The notebook tests each method in order — implement them top to bottom.
+The notebook tests each method in order - implement them top to bottom.
 
 Testing
 -------
@@ -107,7 +107,7 @@ class PCA:
 
         Hint
         ----
-        np.linalg.eigh returns eigenvalues in ASCENDING order — reverse them.
+        np.linalg.eigh returns eigenvalues in ASCENDING order - reverse them.
         Eigenvectors are columns of the returned matrix, not rows.
         """
         raise NotImplementedError("TODO: implement fit")
@@ -178,7 +178,7 @@ class PCA:
 
 
 # ---------------------------------------------------------------------------
-# TruncatedSVD  (directly via np.linalg.svd — no centering)
+# TruncatedSVD  (directly via np.linalg.svd - no centering)
 # ---------------------------------------------------------------------------
 
 class TruncatedSVD:
@@ -198,8 +198,8 @@ class TruncatedSVD:
 
     Attributes (set after fit)
     --------------------------
-    components_       : ndarray (n_components, n_features)  — V_k^T rows
-    singular_values_  : ndarray (n_components,)             — σ_1 ≥ … ≥ σ_k
+    components_       : ndarray (n_components, n_features)  - V_k^T rows
+    singular_values_  : ndarray (n_components,)             - σ_1 ≥ … ≥ σ_k
     explained_variance_ratio_ : ndarray (n_components,)
     """
 

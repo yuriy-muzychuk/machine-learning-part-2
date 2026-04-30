@@ -1,5 +1,5 @@
 """
-nn_multiclass_student.py — Multi-Layer Neural Network (Student Version)
+nn_multiclass_student.py - Multi-Layer Neural Network (Student Version)
 ========================================================================
 Week 4 Lab: Extend the two-layer network from Week 3 into a general
 multi-layer neural network that supports:
@@ -16,7 +16,7 @@ Implement every method marked with
 Do NOT import anything beyond what is already imported.
 Do NOT change method signatures or the __init__ constructor.
 The provided methods (fit, predict, predict_proba) depend on your
-implementations — do not modify them.
+implementations - do not modify them.
 
 Architecture example:
     NeuralNetwork(layer_sizes=[2, 16, 8, 3],
@@ -34,7 +34,7 @@ import numpy as np
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Section 1 — Standalone Activation Functions (used outside the class too)
+# Section 1 - Standalone Activation Functions (used outside the class too)
 # ─────────────────────────────────────────────────────────────────────────────
 
 def relu(z):
@@ -46,7 +46,7 @@ def relu(z):
 
     Returns
     -------
-    np.ndarray, same shape — negative values clamped to 0
+    np.ndarray, same shape - negative values clamped to 0
 
     Hint: np.maximum(0, z)
     """
@@ -58,7 +58,7 @@ def relu_derivative(z):
 
     Parameters
     ----------
-    z : np.ndarray, any shape — PRE-ACTIVATION values
+    z : np.ndarray, any shape - PRE-ACTIVATION values
 
     Returns
     -------
@@ -78,11 +78,11 @@ def softmax(z):
 
     Parameters
     ----------
-    z : np.ndarray shape (N, K) — K is the number of classes
+    z : np.ndarray shape (N, K) - K is the number of classes
 
     Returns
     -------
-    np.ndarray shape (N, K) — each row sums to 1
+    np.ndarray shape (N, K) - each row sums to 1
 
     Hint:
         shifted = z - z.max(axis=1, keepdims=True)
@@ -93,7 +93,7 @@ def softmax(z):
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Section 2 — NeuralNetwork Class
+# Section 2 - NeuralNetwork Class
 # ─────────────────────────────────────────────────────────────────────────────
 
 class NeuralNetwork:
@@ -118,8 +118,8 @@ class NeuralNetwork:
 
     Attributes (set after fit)
     --------------------------
-    params_     : dict  — weights W1,b1, W2,b2, … indexed by layer
-    loss_curve_ : list  — training loss recorded each epoch
+    params_     : dict  - weights W1,b1, W2,b2, … indexed by layer
+    loss_curve_ : list  - training loss recorded each epoch
     """
 
     def __init__(self, layer_sizes, activations, random_state=42):
@@ -140,7 +140,7 @@ class NeuralNetwork:
         Parameters
         ----------
         z    : np.ndarray
-        name : str — one of 'relu', 'tanh', 'sigmoid', 'softmax'
+        name : str - one of 'relu', 'tanh', 'sigmoid', 'softmax'
 
         Returns
         -------
@@ -161,14 +161,14 @@ class NeuralNetwork:
     def _activation_derivative(self, z, name):
         """Derivative of activation by name w.r.t. PRE-ACTIVATION z.
 
-        Note: for 'softmax' this method is NOT called during backprop —
+        Note: for 'softmax' this method is NOT called during backprop -
         the softmax + cross-entropy gradient simplifies to (A - Y)
         and is handled directly in backward().
 
         Parameters
         ----------
-        z    : np.ndarray — pre-activation
-        name : str — 'relu', 'tanh', or 'sigmoid'
+        z    : np.ndarray - pre-activation
+        name : str - 'relu', 'tanh', or 'sigmoid'
 
         Returns
         -------
@@ -183,11 +183,11 @@ class NeuralNetwork:
             return s * (1.0 - s)
         else:
             raise ValueError(
-                f"_activation_derivative called for '{name}' — "
+                f"_activation_derivative called for '{name}' - "
                 "softmax derivative is handled in backward()."
             )
 
-    # ── Section 2.1 — Weight Initialisation ──────────────────────────────────
+    # ── Section 2.1 - Weight Initialisation ──────────────────────────────────
 
     def initialise_params(self):
         """Xavier (Glorot) initialisation for all layers.
@@ -209,7 +209,7 @@ class NeuralNetwork:
         """
         raise NotImplementedError("TODO: implement initialise_params")
 
-    # ── Section 2.2 — Forward Pass ────────────────────────────────────────────
+    # ── Section 2.2 - Forward Pass ────────────────────────────────────────────
 
     def forward(self, X):
         """Forward pass through all layers.
@@ -224,8 +224,8 @@ class NeuralNetwork:
 
         Returns
         -------
-        A_L  : np.ndarray — output activations (probabilities)
-        cache: dict — all intermediate values needed for backprop:
+        A_L  : np.ndarray - output activations (probabilities)
+        cache: dict - all intermediate values needed for backprop:
             'A0': X,
             'Z1': ..., 'A1': ...,
             'Z2': ..., 'A2': ...,
@@ -239,7 +239,7 @@ class NeuralNetwork:
         """
         raise NotImplementedError("TODO: implement forward")
 
-    # ── Section 2.3 — Loss ───────────────────────────────────────────────────
+    # ── Section 2.3 - Loss ───────────────────────────────────────────────────
 
     def compute_loss(self, A_out, y):
         """Compute the loss based on the output activation type.
@@ -254,11 +254,11 @@ class NeuralNetwork:
         Parameters
         ----------
         A_out : np.ndarray shape (N, K) or (N, 1)
-        y     : np.ndarray shape (N,) — integer class labels (or binary)
+        y     : np.ndarray shape (N,) - integer class labels (or binary)
 
         Returns
         -------
-        float — scalar loss
+        float - scalar loss
 
         Hint for softmax:
             Y_onehot = np.eye(K)[y.astype(int)]   # one-hot  (N, K)
@@ -271,7 +271,7 @@ class NeuralNetwork:
         """
         raise NotImplementedError("TODO: implement compute_loss")
 
-    # ── Section 2.4 — Backward Pass ──────────────────────────────────────────
+    # ── Section 2.4 - Backward Pass ──────────────────────────────────────────
 
     def backward(self, y, cache):
         """Backpropagation through all layers.
@@ -295,8 +295,8 @@ class NeuralNetwork:
 
         Parameters
         ----------
-        y     : np.ndarray shape (N,) — true labels
-        cache : dict — from forward()
+        y     : np.ndarray shape (N,) - true labels
+        cache : dict - from forward()
 
         Returns
         -------
@@ -325,7 +325,7 @@ class NeuralNetwork:
         """
         raise NotImplementedError("TODO: implement backward")
 
-    # ── Section 2.5 — Parameter Update ───────────────────────────────────────
+    # ── Section 2.5 - Parameter Update ───────────────────────────────────────
 
     def update_params(self, grads, lr):
         """Gradient descent update for all parameters (in-place).
@@ -335,8 +335,8 @@ class NeuralNetwork:
 
         Parameters
         ----------
-        grads : dict — from backward()
-        lr    : float — learning rate
+        grads : dict - from backward()
+        lr    : float - learning rate
 
         Hint: loop over l = 1..L and update self.params_['W{l}'] and
         self.params_['b{l}'] using grads['dW{l}'] and grads['db{l}'].
@@ -351,10 +351,10 @@ class NeuralNetwork:
         Parameters
         ----------
         X        : np.ndarray shape (N, n_features)
-        y        : np.ndarray shape (N,) — integer class labels
-        lr       : float — learning rate
-        n_epochs : int   — number of gradient descent steps
-        verbose  : bool  — print loss every 200 epochs
+        y        : np.ndarray shape (N,) - integer class labels
+        lr       : float - learning rate
+        n_epochs : int   - number of gradient descent steps
+        verbose  : bool  - print loss every 200 epochs
 
         Returns
         -------
@@ -397,7 +397,7 @@ class NeuralNetwork:
 
         Returns
         -------
-        np.ndarray shape (N,) — integer class labels
+        np.ndarray shape (N,) - integer class labels
         """
         proba = self.predict_proba(X)
         if proba.ndim == 1:

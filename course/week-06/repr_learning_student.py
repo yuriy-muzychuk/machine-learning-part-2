@@ -1,5 +1,5 @@
 """
-repr_learning_student.py — Representation Learning with Neural Networks (Student)
+repr_learning_student.py - Representation Learning with Neural Networks (Student)
 ==================================================================================
 Week 6 Lab: Learned vs engineered features; visualization and interpretation
 of neural network hidden states.
@@ -39,7 +39,7 @@ from sklearn.metrics import accuracy_score
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Section 1 — Network Architecture
+# Section 1 - Network Architecture
 # ─────────────────────────────────────────────────────────────────────────────
 
 class RepresentationNet(nn.Module):
@@ -59,10 +59,10 @@ class RepresentationNet(nn.Module):
 
     Parameters
     ----------
-    input_dim      : int — number of input features (default 2)
-    hidden_dim     : int — width of the first hidden layer (default 32)
-    bottleneck_dim : int — width of the representation layer (default 2)
-    n_classes      : int — number of output classes (default 2)
+    input_dim      : int - number of input features (default 2)
+    hidden_dim     : int - width of the first hidden layer (default 32)
+    bottleneck_dim : int - width of the representation layer (default 2)
+    n_classes      : int - number of output classes (default 2)
     """
 
     def __init__(self, input_dim=2, hidden_dim=32, bottleneck_dim=2, n_classes=2):
@@ -101,14 +101,14 @@ class RepresentationNet(nn.Module):
     def forward(self, x):
         """Full forward pass: encode then classify.
 
-        This method is already provided — do not modify it.
+        This method is already provided - do not modify it.
         It depends on your encode() implementation.
         """
         return self.classifier(self.encode(x))
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Section 2 — Training Utilities
+# Section 2 - Training Utilities
 # ─────────────────────────────────────────────────────────────────────────────
 
 def train_epoch(model, optimizer, X_t, y_t):
@@ -127,18 +127,18 @@ def train_epoch(model, optimizer, X_t, y_t):
     ----------
     model     : RepresentationNet (or any nn.Module)
     optimizer : torch.optim optimizer attached to model.parameters()
-    X_t       : torch.Tensor shape (N, input_dim), dtype float32 — input features
-    y_t       : torch.Tensor shape (N,), dtype long — integer class labels
+    X_t       : torch.Tensor shape (N, input_dim), dtype float32 - input features
+    y_t       : torch.Tensor shape (N,), dtype long - integer class labels
 
     Returns
     -------
-    float — scalar loss value for this epoch
+    float - scalar loss value for this epoch
     """
     raise NotImplementedError("TODO: implement train_epoch")
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Section 3 — Activation Extraction via Hooks
+# Section 3 - Activation Extraction via Hooks
 # ─────────────────────────────────────────────────────────────────────────────
 
 def extract_activations(model, X_tensor, layer):
@@ -163,9 +163,9 @@ def extract_activations(model, X_tensor, layer):
 
     Parameters
     ----------
-    model    : nn.Module — the trained network
-    X_tensor : torch.Tensor shape (N, input_dim) — input data
-    layer    : nn.Module — a submodule of `model`, e.g. model.act1 or model.act2
+    model    : nn.Module - the trained network
+    X_tensor : torch.Tensor shape (N, input_dim) - input data
+    layer    : nn.Module - a submodule of `model`, e.g. model.act1 or model.act2
 
     Returns
     -------
@@ -175,7 +175,7 @@ def extract_activations(model, X_tensor, layer):
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Section 4 — Linear Probe
+# Section 4 - Linear Probe
 # ─────────────────────────────────────────────────────────────────────────────
 
 def linear_probe(h_train, y_train, h_val, y_val):
@@ -194,10 +194,10 @@ def linear_probe(h_train, y_train, h_val, y_val):
 
     Parameters
     ----------
-    h_train : np.ndarray shape (N_train, d) — training representations
-    y_train : np.ndarray shape (N_train,)   — training labels
-    h_val   : np.ndarray shape (N_val, d)   — validation representations
-    y_val   : np.ndarray shape (N_val,)     — validation labels
+    h_train : np.ndarray shape (N_train, d) - training representations
+    y_train : np.ndarray shape (N_train,)   - training labels
+    h_val   : np.ndarray shape (N_val, d)   - validation representations
+    y_val   : np.ndarray shape (N_val,)     - validation labels
 
     Returns
     -------

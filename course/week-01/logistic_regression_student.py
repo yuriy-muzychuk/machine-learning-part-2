@@ -1,7 +1,7 @@
 """
 Logistic Regression implementation from scratch using NumPy.
 
-This is the STUDENT version — complete the TODO sections to make it work.
+This is the STUDENT version - complete the TODO sections to make it work.
 Functions are imported and used in the lab notebook.
 """
 
@@ -118,14 +118,14 @@ def train_logistic_regression(X, y, learning_rate=0.01, epochs=1000):
     losses = []
 
     for epoch in range(epochs):
-        # TODO: Forward pass — compute z = X @ w + b, then y_pred = sigmoid(z)
+        # TODO: Forward pass - compute z = X @ w + b, then y_pred = sigmoid(z)
         y_pred = None
 
         # TODO: Compute loss using logistic_loss and append to losses
         loss = None
         losses.append(loss)
 
-        # Backward pass — gradients are provided
+        # Backward pass - gradients are provided
         dw = np.dot(X.T, (y_pred - y)) / n_samples
         db = np.mean(y_pred - y)
 

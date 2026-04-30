@@ -1,22 +1,22 @@
 """
-anomaly_detection_student.py — Anomaly Detection (Student Version)
+anomaly_detection_student.py - Anomaly Detection (Student Version)
 ===================================================================
 Week 10 Lab: Anomaly Detection
 
 Classes defined here
 --------------------
-IsolationTree    — a single random binary isolation tree (from scratch)
-IsolationForest  — ensemble of IsolationTrees             (from scratch)
-OneClassSVM      — sklearn OCSVM with manual kernel eval  (wrapper)
+IsolationTree    - a single random binary isolation tree (from scratch)
+IsolationForest  - ensemble of IsolationTrees             (from scratch)
+OneClassSVM      - sklearn OCSVM with manual kernel eval  (wrapper)
 
 Methods YOU implement  (6 TODOs)
 ---------------------------------
-IsolationTree.fit             — recursive random binary split
-IsolationTree.path_length     — path length to isolate one point
-IsolationForest.score_samples — mean path length -> anomaly score in (0, 1)
-IsolationForest.predict       — flag top-contamination fraction as anomalies
-OneClassSVM._rbf_kernel       — RBF kernel matrix K[i,j] = exp(-g ||xi-yj||^2)
-OneClassSVM.score_samples     — decision function from stored support vectors
+IsolationTree.fit             - recursive random binary split
+IsolationTree.path_length     - path length to isolate one point
+IsolationForest.score_samples - mean path length -> anomaly score in (0, 1)
+IsolationForest.predict       - flag top-contamination fraction as anomalies
+OneClassSVM._rbf_kernel       - RBF kernel matrix K[i,j] = exp(-g ||xi-yj||^2)
+OneClassSVM.score_samples     - decision function from stored support vectors
 
 Do NOT import anything beyond what is already imported.
 Do NOT change method signatures or __init__ constructors.
@@ -27,7 +27,7 @@ from sklearn.svm import OneClassSVM as _SklearnOCSVM
 
 
 # =============================================================================
-# Helper — expected path length normalisation
+# Helper - expected path length normalisation
 # =============================================================================
 
 def _c(n):
@@ -45,7 +45,7 @@ def _c(n):
 
     Parameters
     ----------
-    n : int — number of samples at the node
+    n : int - number of samples at the node
 
     Returns
     -------
@@ -60,7 +60,7 @@ def _c(n):
 
 
 # =============================================================================
-# Section 1 — Isolation Tree
+# Section 1 - Isolation Tree
 # =============================================================================
 
 class IsolationTree:
@@ -79,7 +79,7 @@ class IsolationTree:
 
     Parameters
     ----------
-    max_depth : int — maximum tree depth
+    max_depth : int - maximum tree depth
     """
 
     def __init__(self, max_depth):
@@ -104,8 +104,8 @@ class IsolationTree:
 
         Parameters
         ----------
-        X     : ndarray (n, d) — data points reaching this node
-        depth : int            — current depth (root starts at 0)
+        X     : ndarray (n, d) - data points reaching this node
+        depth : int            - current depth (root starts at 0)
 
         Returns
         -------
@@ -156,12 +156,12 @@ class IsolationTree:
 
         Parameters
         ----------
-        x     : ndarray (d,) — a single data point
-        depth : int          — current depth (call from root with depth=0)
+        x     : ndarray (d,) - a single data point
+        depth : int          - current depth (call from root with depth=0)
 
         Returns
         -------
-        float — effective isolation depth
+        float - effective isolation depth
 
         Steps
         -----
@@ -178,7 +178,7 @@ class IsolationTree:
 
 
 # =============================================================================
-# Section 2 — Isolation Forest
+# Section 2 - Isolation Forest
 # =============================================================================
 
 class IsolationForest:
@@ -191,15 +191,15 @@ class IsolationForest:
     expected BST path length from _c().
 
     Interpretation:
-        s(x) close to 1   — likely anomaly   (isolated quickly by all trees)
-        s(x) close to 0.5 — likely normal    (hard to isolate)
-        s(x) close to 0   — never anomaly    (very deep paths, denser than normal)
+        s(x) close to 1   - likely anomaly   (isolated quickly by all trees)
+        s(x) close to 0.5 - likely normal    (hard to isolate)
+        s(x) close to 0   - never anomaly    (very deep paths, denser than normal)
 
     Parameters
     ----------
-    n_estimators  : int   — number of trees in the ensemble
-    max_samples   : int   — subsample size per tree (None -> min(256, n))
-    contamination : float — expected fraction of anomalies, used in predict()
+    n_estimators  : int   - number of trees in the ensemble
+    max_samples   : int   - subsample size per tree (None -> min(256, n))
+    contamination : float - expected fraction of anomalies, used in predict()
     random_state  : int
     """
 
@@ -257,7 +257,7 @@ class IsolationForest:
 
         Returns
         -------
-        scores : ndarray (n,) — anomaly scores in (0, 1)
+        scores : ndarray (n,) - anomaly scores in (0, 1)
 
         Steps
         -----
@@ -291,7 +291,7 @@ class IsolationForest:
 
         Returns
         -------
-        labels : ndarray (n,) — 0 = normal, 1 = anomaly
+        labels : ndarray (n,) - 0 = normal, 1 = anomaly
 
         Steps
         -----
@@ -303,7 +303,7 @@ class IsolationForest:
 
 
 # =============================================================================
-# Section 3 — One-Class SVM  (sklearn wrapper)
+# Section 3 - One-Class SVM  (sklearn wrapper)
 # =============================================================================
 
 class OneClassSVM:
@@ -314,7 +314,7 @@ class OneClassSVM:
     using the stored support vectors and dual coefficients.
 
     This makes the kernel trick concrete: to score a new point x, we only
-    need to evaluate K(x, sv_i) for each support vector sv_i — the full
+    need to evaluate K(x, sv_i) for each support vector sv_i - the full
     training set is not required at prediction time.
 
     Decision boundary:
@@ -324,9 +324,9 @@ class OneClassSVM:
 
     Parameters
     ----------
-    nu    : float — upper bound on training errors and lower bound on the
+    nu    : float - upper bound on training errors and lower bound on the
                     fraction of support vectors; controls the boundary tightness
-    gamma : float — RBF kernel bandwidth (larger gamma = tighter kernel)
+    gamma : float - RBF kernel bandwidth (larger gamma = tighter kernel)
     """
 
     def __init__(self, nu=0.1, gamma=0.5):
@@ -336,7 +336,7 @@ class OneClassSVM:
         self._svm             = None
         self._support_vectors = None   # ndarray (n_sv, d)
         self._dual_coef       = None   # ndarray (n_sv,)
-        self._rho             = None   # float — decision threshold
+        self._rho             = None   # float - decision threshold
 
     # ------------------------------------------------------------------
     # Provided
@@ -406,7 +406,7 @@ class OneClassSVM:
 
         Returns
         -------
-        scores : ndarray (n,) — signed distance to the decision boundary
+        scores : ndarray (n,) - signed distance to the decision boundary
 
         Steps
         -----

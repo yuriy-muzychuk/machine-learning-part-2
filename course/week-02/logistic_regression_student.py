@@ -2,7 +2,7 @@
 Logistic Regression module with BGD, SGD, MBGD, L1/L2 regularization,
 early stopping, and optimization diagnostics.
 
-This is the STUDENT version — complete the TODO sections to make it work.
+This is the STUDENT version - complete the TODO sections to make it work.
 """
 
 import numpy as np
@@ -200,7 +200,7 @@ class LogisticRegression:
         Parameters
         ----------
         X : array-like, shape (n_samples, n_features)
-        y : array-like, shape (n_samples,)  — binary labels {0, 1}
+        y : array-like, shape (n_samples,)  - binary labels {0, 1}
         """
         X = np.array(X, dtype=float)
         y = np.array(y, dtype=float)

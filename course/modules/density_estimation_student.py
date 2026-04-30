@@ -1,28 +1,28 @@
 """
-density_estimation_student.py — KDE and GMM from Scratch (Student Version)
+density_estimation_student.py - KDE and GMM from Scratch (Student Version)
 ===========================================================================
 Week 9 Lab: Density Estimation
 
 Your task
 ---------
 Implement the four methods marked with
-Everything else — including the core algorithmic logic — is already provided
+Everything else - including the core algorithmic logic - is already provided
 so that you can run and explore the notebook while working on your parts.
 
 Methods YOU implement:
-    KDE._log_gaussian_kernel   — formula for the log of a Gaussian kernel
-    KDE.sample                 — draw samples from the estimated density
-    GMM.score_samples          — log-likelihood of each point under the mixture
-    GMM.predict                — hard cluster assignment via argmax
+    KDE._log_gaussian_kernel   - formula for the log of a Gaussian kernel
+    KDE.sample                 - draw samples from the estimated density
+    GMM.score_samples          - log-likelihood of each point under the mixture
+    GMM.predict                - hard cluster assignment via argmax
 
 Methods PROVIDED for you:
-    KDE.fit                    — store training data
-    KDE.score_samples          — full log-density computation (calls your kernel)
-    GMM._log_gaussian          — log N(X | mu, Sigma) helper
-    GMM.fit                    — full EM loop (calls _e_step and _m_step)
-    GMM._e_step                — E-step: compute responsibilities
-    GMM._m_step                — M-step: update parameters
-    GMM.sample                 — generate samples from the fitted mixture
+    KDE.fit                    - store training data
+    KDE.score_samples          - full log-density computation (calls your kernel)
+    GMM._log_gaussian          - log N(X | mu, Sigma) helper
+    GMM.fit                    - full EM loop (calls _e_step and _m_step)
+    GMM._e_step                - E-step: compute responsibilities
+    GMM._m_step                - M-step: update parameters
+    GMM.sample                 - generate samples from the fitted mixture
 
 Do NOT import anything beyond what is already imported.
 Do NOT change method signatures or __init__ constructors.
@@ -33,7 +33,7 @@ from scipy.special import logsumexp
 
 
 # =============================================================================
-# Section 1 — Kernel Density Estimation (KDE)
+# Section 1 - Kernel Density Estimation (KDE)
 # =============================================================================
 
 class KDE:
@@ -45,7 +45,7 @@ class KDE:
 
     Parameters
     ----------
-    bandwidth : float  — smoothing bandwidth h (must be > 0)
+    bandwidth : float  - smoothing bandwidth h (must be > 0)
     """
 
     def __init__(self, bandwidth=1.0):
@@ -64,7 +64,7 @@ class KDE:
     def score_samples(self, X_query):
         """Log-density estimate at each query point.
 
-        Calls your _log_gaussian_kernel internally — implement that first.
+        Calls your _log_gaussian_kernel internally - implement that first.
 
         Parameters
         ----------
@@ -101,11 +101,11 @@ class KDE:
 
         Parameters
         ----------
-        u : ndarray  — standardised value (x - x_i) / h, any shape
+        u : ndarray  - standardised value (x - x_i) / h, any shape
 
         Returns
         -------
-        log_k : ndarray  — same shape as u
+        log_k : ndarray  - same shape as u
 
         Steps
         -----
@@ -144,7 +144,7 @@ class KDE:
 
 
 # =============================================================================
-# Section 2 — Gaussian Mixture Model (GMM)
+# Section 2 - Gaussian Mixture Model (GMM)
 # =============================================================================
 
 class GMM:
@@ -155,9 +155,9 @@ class GMM:
 
     Parameters
     ----------
-    n_components : int   — number of mixture components K
-    n_iter       : int   — maximum EM iterations
-    tol          : float — stop when |delta log-likelihood| < tol
+    n_components : int   - number of mixture components K
+    n_iter       : int   - maximum EM iterations
+    tol          : float - stop when |delta log-likelihood| < tol
     random_state : int
     """
 
@@ -290,7 +290,7 @@ class GMM:
         log p(x_i) = log sum_{k} pi_k * N(x_i; mu_k, Sigma_k)
 
         Hint: the pattern is the same as _e_step steps 1-2, but here you
-        do NOT normalise — just apply logsumexp to marginalise over k.
+        do NOT normalise - just apply logsumexp to marginalise over k.
 
         Parameters
         ----------

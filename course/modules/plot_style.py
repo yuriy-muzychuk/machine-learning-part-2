@@ -1,5 +1,5 @@
 """
-plot_style.py — Shared plot style for all course notebooks.
+plot_style.py - Shared plot style for all course notebooks.
 
 Usage
 -----
@@ -36,7 +36,7 @@ def setup_plot_style() -> None:
     - Grid style: seaborn-v0_8-whitegrid
     - Color palette: colorblind-safe (8 colors)
     - DPI: 120
-    - Font size: 11 pt (DejaVu Sans — supports Unicode / Ukrainian glyphs)
+    - Font size: 11 pt (DejaVu Sans - supports Unicode / Ukrainian glyphs)
     - Spines: top and right removed
     - Default figure size: 8 × 5 inches
     """
