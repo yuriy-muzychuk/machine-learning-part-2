@@ -1,0 +1,10 @@
+# Python 3.12 required
+# Homework 2: MLP from Scratch
+# Requirements for multi-layer perceptron implementation
+
+# All course dependencies are listed in the root requirements.txt.
+# Install from the repository root:
+#
+#   pip install -r requirements.txt
+
+

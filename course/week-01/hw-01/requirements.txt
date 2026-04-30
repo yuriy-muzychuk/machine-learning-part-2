@@ -1,0 +1,10 @@
+# Homework 1: Neural Foundations
+# Python 3.12 required
+# Requirements for logistic regression implementation
+
+# All course dependencies are listed in the root requirements.txt.
+# Install from the repository root:
+#
+#   pip install -r requirements.txt
+
+
